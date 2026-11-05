@@ -21,20 +21,23 @@ function SignoffPanel({ area }: { area: string }) {
           const s = wp.signoffs.find((x) => x.area === area && x.level === level);
           const d = allowed({ type: "signoff.given", target: area, payload: { level, hash } });
           return (
-            <div key={level} className="flex flex-wrap items-start gap-2 text-sm">
-              <span className="w-20 capitalize text-slate-500">{level}</span>
-              <div className="min-w-0 flex-1">
-                {s ? (
-                  s.valid
-                    ? <span className="flex items-center gap-1 text-emerald-700"><CheckCircle2 size={14} /><ActorName id={s.event.actorId} /> · {shortDateTime(s.event.simAt)}</span>
-                    : <span className="text-amber-700"><span className="flex items-center gap-1"><AlertTriangle size={14} />Reopened — <ActorName id={s.event.actorId} /> signed {shortDateTime(s.event.simAt)}</span><ul className="ml-5 list-disc text-xs">{s.changes.slice(0, 4).map((c, i) => <li key={i}>{c}</li>)}</ul></span>
-                ) : <span className="text-slate-400">Not signed</span>}
-                {!d.ok && (!s || !s.valid) && <Blocked decision={d} />}
+            <div key={level} className="border-b border-slate-100 pb-2 text-sm last:border-0">
+              <div className="flex items-center gap-2">
+                <span className="w-20 capitalize text-slate-500">{level}</span>
+                <span className="min-w-0 flex-1">
+                  {s ? (s.valid
+                    ? <span className="flex items-center gap-1 text-emerald-700"><CheckCircle2 size={14} className="shrink-0" />Signed</span>
+                    : <span className="flex items-center gap-1 font-medium text-amber-700"><AlertTriangle size={14} className="shrink-0" />Reopened</span>)
+                    : <span className="text-slate-400">Not signed</span>}
+                </span>
+                {(!s || !s.valid) && (
+                  <Button size="sm" variant={level === "preparer" ? "default" : "primary"} decision={d}
+                    onClick={() => emit([{ type: "signoff.given", target: area, payload: { level, hash, summary: "" } }], { label: `${level} sign-off recorded` })}>Sign off</Button>
+                )}
               </div>
-              {(!s || !s.valid) && (
-                <Button size="sm" variant={level === "preparer" ? "default" : "primary"} decision={d}
-                  onClick={() => emit([{ type: "signoff.given", target: area, payload: { level, hash, summary: "" } }], { label: `${level} sign-off recorded` })}>Sign off</Button>
-              )}
+              {s && <p className="mt-0.5 pl-[88px] text-xs text-slate-500"><ActorName id={s.event.actorId} /> · {shortDateTime(s.event.simAt)}</p>}
+              {s && !s.valid && <ul className="mt-0.5 list-disc pl-[104px] text-xs text-amber-700">{s.changes.slice(0, 4).map((c, i) => <li key={i}>{c}</li>)}</ul>}
+              {!d.ok && (!s || !s.valid) && <div className="pl-[88px]"><Blocked decision={d} /></div>}
             </div>
           );
         })}
