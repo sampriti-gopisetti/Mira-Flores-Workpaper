@@ -1,0 +1,7 @@
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[functions]
+  # the packet is read at runtime and ingested once (idempotent)
+  included_files = ["data/packet.json", "data/packet-rerun.json"]
