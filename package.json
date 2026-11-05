@@ -1,5 +1,5 @@
 {
-  "name": "workpaper",
+  "name": "miraflores-workpaper",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "rerun-packet": "tsx scripts/make-rerun-packet.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.3.8",
@@ -29,7 +31,6 @@
     "@types/pg": "8.15.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "drizzle-kit": "0.31.4",
     "eslint": "^9",
     "eslint-config-next": "15.5.28",
     "tailwindcss": "^4",
@@ -37,5 +38,6 @@
     "typescript": "^5",
     "vitest": "3.2.4"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.9.0",
+  "description": "Web-native tax workpaper for the Miraflores case study (Okafor-Lindqvist 2025 return)"
 }
