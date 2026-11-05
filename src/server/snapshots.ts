@@ -1,5 +1,5 @@
 import "server-only";
-import { and, asc, eq, gt } from "drizzle-orm";
+import { and, asc, eq, gt, lte, sql } from "drizzle-orm";
 import type { DB } from "./db";
 import * as t from "./schema";
 import type { WpEvent, EventType } from "@/domain/events";
@@ -50,6 +50,12 @@ function snapFor(returnId: string, packetId: string): Snap {
 /** The log for a return, reading only rows newer than the snapshot. Call inside the write lock. */
 export async function syncLog(tx: Tx, returnId: string, packetId: string): Promise<{ snap: Snap; events: WpEvent[] }> {
   const s = snapFor(returnId, packetId);
+  // The log only grows, except when an operator resets demo data: if it shrank, start over.
+  if (s.seq > 0) {
+    const [{ n }] = await tx.select({ n: sql<number>`count(*)::int` }).from(t.events)
+      .where(and(eq(t.events.returnId, returnId), lte(t.events.seq, s.seq)));
+    if (n !== s.events.length) { s.seq = 0; s.events = []; s.states.clear(); }
+  }
   const rows = await tx.select().from(t.events)
     .where(and(eq(t.events.returnId, returnId), gt(t.events.seq, s.seq))).orderBy(asc(t.events.seq));
   s.stats.incrementalReads++;
