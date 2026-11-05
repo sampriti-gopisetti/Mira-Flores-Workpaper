@@ -1,5 +1,7 @@
 # Errors found, and how the design surfaced them
 
+**Live:** https://miraflores-workpaper-okafor.netlify.app (Issues page) · **Code:** https://github.com/sampriti-gopisetti/Mira-Flores-Workpaper
+
 Every item below is an **independent check** in `src/domain/checks.ts`. It recomputes the figure from the documents, the agency records or the client's answers, and never from the engine. It appears in the Issues inbox, on its area page and in the Inspector of every line it touches. Tax effects are the app's estimates (Δ × the v3 per-dollar rates; payments and credits 1:1). A positive number means more tax or a larger balance due.
 
 | # | Error (engine v3) | Evidence that exposes it | How the design surfaced it | Est. effect (Fed / CA) |

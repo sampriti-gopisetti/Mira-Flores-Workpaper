@@ -1,6 +1,6 @@
 # Core idea and data model
 
-**Live:** https://miraflores-workpaper-okafor.netlify.app · **Code:** see the repository link in the submission
+**Live:** https://miraflores-workpaper-okafor.netlify.app · **Code:** https://github.com/sampriti-gopisetti/Mira-Flores-Workpaper · **Video:** [walkthrough](https://drive.google.com/file/d/1qMb3L_GRZx5AiRfim7UbqZrDQUnGBN8C/view?usp=drive_link)
 
 ## Core idea: every number is a claim with its own case file
 
@@ -11,7 +11,7 @@ A workpaper exists to prove the return, so the unit of the design is not a cell 
 - every change, with who, why and tax effect
 - the notes, questions and checks on it
 
-Everything else is a view over these claims: the issues inbox, the area workspaces, the document index ("where it landed, or why not"), the season and filing timeline, the client portal and the examination record. Nothing is overwritten, and nothing is a spreadsheet.
+Everything else is a view over these claims: the issues inbox, the area workspaces, the document index ("where it landed, or why not"), the season and filing timeline, the client portal and the examination record. Nothing is overwritten, and nothing is a spreadsheet. A 3-minute click-along **Tour** teaches a new user where every piece of data comes from.
 
 **The engine is tested, not trusted.** About 25 independent checks recompute figures from the printed documents, IRS/FTB records, client answers and the prior year, then compare them with the engine. Each finding comes with evidence and a priced fix that can be undone. Checks that pass are kept as evidence too.
 
